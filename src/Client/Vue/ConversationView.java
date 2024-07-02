@@ -92,6 +92,7 @@ public class ConversationView extends JPanel implements ConversationsListener {
         }
         convlist=cli.getConvs().getConversations();
         refreshMessages();
+        System.out.println("Updating view");
     }
 
     private void refreshMessages(){
