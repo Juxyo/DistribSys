@@ -45,8 +45,8 @@ public class ConversationsObserver implements Runnable {
      * Update states with a 1 sec interval
      */
     public void Update() {
-        for (ConversationsListener cl : Listeners) {
-            cl.updateConversationsList();
+        for (int i = 0; i < Listeners.size(); i++) {
+            Listeners.get(i).updateConversationsList();
         }
     }
 

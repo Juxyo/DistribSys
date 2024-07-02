@@ -42,7 +42,7 @@ public class ConversationList implements ConversationsListener {
         String conversation_name=data[1];
         String msg=data[2];
         String[] clock=data[3].split(";");
-        ArrayList<String> clockstates=new ArrayList<>();
+        Vector<String> clockstates=new Vector<>();
         for (String state:clock) {
             clockstates.add(state);
         }

@@ -10,7 +10,7 @@ public class Message {
     /**
      * Default constructor
      */
-    public Message(String text,ArrayList<String> clockState) {
+    public Message(String text,Vector<String> clockState) {
         this.text=text;
         this.clockState=clockState;
     }
@@ -23,13 +23,13 @@ public class Message {
     /**
      * 
      */
-    private ArrayList clockState;
+    private Vector clockState;
 
     public String getText() {
         return text;
     }
 
-    public ArrayList getClockState() {
+    public Vector getClockState() {
         return clockState;
     }
 }
