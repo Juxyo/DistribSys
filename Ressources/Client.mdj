@@ -3657,7 +3657,7 @@
 											"top": 95,
 											"width": 70,
 											"height": 13,
-											"text": "CLient.Executor"
+											"text": "CLient.Client.CLIExecutor"
 										},
 										{
 											"_type": "LabelView",
@@ -6809,7 +6809,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "CLient.Executor",
+					"name": "CLient.Client.CLIExecutor",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
