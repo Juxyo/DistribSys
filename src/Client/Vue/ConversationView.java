@@ -20,7 +20,6 @@ public class ConversationView extends JPanel implements ConversationsListener {
 
     private Vector<Conversation> convlist;
 
-    private String current_conv="General";
     /**
      * Default constructor
      */
@@ -31,13 +30,13 @@ public class ConversationView extends JPanel implements ConversationsListener {
 
     private Client cli;
 
-    private String conv;
+    private String currentConv="General";
+
 
     public ConversationView(Client cli,String conv) {
         this.cli=cli;
         convlist=cli.getConvs().getConversations();
         cli.getConvObserver().subscribe(this);
-        this.conv=conv;
         this.setLayout(new BorderLayout());
 
         // Create the list model and populate it with initial data
@@ -80,8 +79,20 @@ public class ConversationView extends JPanel implements ConversationsListener {
     private void sendMSG() {
         String newItem = inputField.getText().trim();
         if (!newItem.isEmpty()) {
-            cli.sendMessage(newItem,conv);
+            if (cli.getCurrentConv().equals("General")) cli.sendMessage(newItem, cli.getCurrentConv(),cli.getKnownHosts());
+            else{
+                cli.sendMessage(newItem, cli.getCurrentConv(),cli.getCurrentConv().split("-")[1]);
+            }
             inputField.setText(""); // Clear the input field
+        }
+        for (Conversation conv:convlist) {
+            if(conv.getName().equals(cli.getCurrentConv())){
+                conv.addMessage(new Message(newItem,cli.getClock().toString()));
+                listModel.addElement(newItem);
+                for (Message msg:conv.getMessages()) {
+
+                }
+            }
         }
     }
     public void updateConversationsList() {
@@ -92,18 +103,16 @@ public class ConversationView extends JPanel implements ConversationsListener {
         }
         convlist=cli.getConvs().getConversations();
         refreshMessages();
-        System.out.println("Updating view");
     }
 
     private void refreshMessages(){
-        listModel=new DefaultListModel<>();
+        listModel.removeAllElements();
         for (Conversation conv:convlist) {
-            if(conv.getName().equals(current_conv)){
+            if(conv.getName().equals(cli.getCurrentConv())){
                 for (Message msg:conv.getMessages()) {
                     listModel.addElement(msg.getText());
                 }
             }
         }
     }
-
 }

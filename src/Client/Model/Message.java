@@ -10,9 +10,9 @@ public class Message {
     /**
      * Default constructor
      */
-    public Message(String text,Vector<String> clockState) {
+    public Message(String text,String clock) {
         this.text=text;
-        this.clockState=clockState;
+        this.clock=clock;
     }
 
     /**
@@ -23,13 +23,13 @@ public class Message {
     /**
      * 
      */
-    private Vector clockState;
+    private String clock;
 
     public String getText() {
         return text;
     }
 
-    public Vector getClockState() {
-        return clockState;
+    public String getClock() {
+        return clock;
     }
 }

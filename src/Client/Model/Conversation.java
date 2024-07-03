@@ -22,4 +22,21 @@ public class Conversation {
     public String getName() {
         return name;
     }
+
+    public void sort(int index){
+
+        if(index==messages.size()-1) {
+            return;
+        }
+        Message m1=messages.get(index);
+        Message m2=messages.get(index+1);
+        if(VectorClock.clockCompare(m1.getClock(),m2.getClock())) sort(index+1);
+        else {
+            messages.set(index,m2);
+            messages.set(index+1,m1);
+            if(index>0) sort(index-1);
+            else sort(0);
+        }
+    }
+
 }
