@@ -24,7 +24,7 @@ public class Conversation {
     }
 
     public void sort(int index){
-
+        System.out.println(index);
         if(index==messages.size()-1) {
             return;
         }
@@ -35,8 +35,15 @@ public class Conversation {
             messages.set(index,m2);
             messages.set(index+1,m1);
             if(index>0) sort(index-1);
-            else sort(0);
+            else if(messages.size()!=0) sort(0);
         }
+    }
+
+    public boolean contains(Message msgToCompare){
+        for (Message msg:messages) {
+            if(msg.getText().equals(msgToCompare.getText()) && msg.getClock().toString().equals(msgToCompare.getClock().toString())) return true;
+        }
+        return false;
     }
 
 }

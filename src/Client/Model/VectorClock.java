@@ -36,7 +36,7 @@ public class VectorClock {
         } else if (c1.length<c2.length) {
             return true;
         }
-        if(result<=0) return false;
+        if(result<0) return false;
         else return true;
     }
 

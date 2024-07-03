@@ -15,7 +15,7 @@ public class ConversationsObserver implements Runnable {
         while(true){
             Update();
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

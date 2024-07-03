@@ -65,7 +65,10 @@ public class ConversationList implements ConversationsListener {
             for (String host:hosts) {
                 if(cli.getKnownHostsaddr().get(host).equals(source_address)){
                     username=host;
-                    cli.getClock().setClock(cli.getKnownHosts().indexOf(username)+1,clock.split(",")[0]);
+                    int userid=cli.getKnownHosts().indexOf(username);
+                    if(conversation_name.split("-").length>1) {
+                        cli.getClock().setClock(1,clock.split(",")[0]);
+                    } else cli.getClock().setClock(userid+1,clock.split(",")[0]);
                 }
             }
         }
@@ -78,14 +81,16 @@ public class ConversationList implements ConversationsListener {
             }
             for (int i = 1; i < convs.size(); i++) {
                 Conversation conv =convs.get(i);
-                if(conv.getName().split("-")[1].equals(sourceHostName)) {
+                if(conv.getName().split("-")[1].equals(sourceHostName) && !conv.contains(new Message(username+": "+msg,clock))) {
                     conv.addMessage(new Message(username+": "+msg,clock));
                     conv.sort(0);
                 }
             }
         }else {
-            cli.getConvs().getConversations().get(0).addMessage(new Message(username+": "+msg,clock));
-            cli.getConvs().getConversations().get(0).sort(0);
+            if(!cli.getConvs().getConversations().get(0).contains(new Message(username+": "+msg,clock))) {
+                cli.getConvs().getConversations().get(0).addMessage(new Message(username + ": " + msg, clock));
+                cli.getConvs().getConversations().get(0).sort(0);
+            }
         }
     }
 

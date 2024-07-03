@@ -109,7 +109,7 @@ public class Client {
         knownHosts.add("moi");
         System.out.println("enter the port to send messages");
         Scanner in = new Scanner(System.in); // using java.util.Scanner;
-        knownHostsaddr.put("moi","192.168.56.1:"+in.nextLine());
+        knownHostsaddr.put("moi",address+":"+in.nextLine());
         //
         login();
 
@@ -127,6 +127,8 @@ public class Client {
             //System.out.println("Sending message at "+clock.toString());
             for (String host:destinationHosts) {
                 try {
+                    UDPUtils.sendData(address+":"+port,msg,conv,clock.toString(),knownHostsaddr.get(host));
+                    UDPUtils.sendData(address+":"+port,msg,conv,clock.toString(),knownHostsaddr.get(host));
                     UDPUtils.sendData(address+":"+port,msg,conv,clock.toString(),knownHostsaddr.get(host));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
