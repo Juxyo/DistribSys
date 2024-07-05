@@ -10,7 +10,10 @@ public class CLIExecutor {
      */
     public static Client cli;
     public static void main(String[] args) {
-        cli=new Client();
+        if(args.length!=1){
+            System.out.println("Using default localhost server");
+            cli=new Client("127.0.0.1");
+        }else cli=new Client(args[0]);
     }
 
 }

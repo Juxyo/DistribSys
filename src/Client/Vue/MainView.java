@@ -15,45 +15,46 @@ public class MainView extends JFrame {
      */
     private MenuView menuView;
 
+    private Client cli;
+
+    private LoginView loginView;
+
     /**
      *
      */
     private ConversationView convView;
 
+    private JPanel mainPanel;
+
     /**
      * Default constructor
      */
-    public MainView(Client cli) {
+    public MainView(Client cli,boolean connected) {
+        this.cli=cli;
         setTitle("Chat: General");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //add(new LoginView((cli)));
+        mainPanel = new JPanel();
+        if(connected) {
+            // Create the menu panel
+            menuView = new MenuView(cli);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+            // Create the string list panel
+            convView = new ConversationView(cli, null);
 
-        // Create the menu panel
-        menuView = new MenuView(cli);
+            mainPanel.setLayout(new BorderLayout());
+            // Add the menu panel to the top of the main panel
+            mainPanel.add(menuView, BorderLayout.NORTH);
 
-        // Create the string list panel
-        convView = new ConversationView(cli,null);
-
-        // Add the menu panel to the top of the main panel
-        mainPanel.add(menuView, BorderLayout.NORTH);
-
-        // Add the string list panel to the center of the main panel
-        mainPanel.add(convView, BorderLayout.CENTER);
-
+            // Add the string list panel to the center of the main panel
+            mainPanel.add(convView, BorderLayout.CENTER);
+        }else {
+            loginView = new LoginView(cli);
+            mainPanel.add(loginView);
+        }
         // Add the main panel to the frame
         add(mainPanel);
         this.setVisible(true);
-    }
-
-    /**
-     * 
-     */
-    public void switchView() {
-        // TODO implement here
     }
 
     public MenuView getMenuView() {
@@ -62,5 +63,9 @@ public class MainView extends JFrame {
 
     public ConversationView getConvView() {
         return convView;
+    }
+
+    public LoginView getLoginView() {
+        return loginView;
     }
 }

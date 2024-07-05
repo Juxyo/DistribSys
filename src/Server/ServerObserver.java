@@ -15,7 +15,7 @@ public class ServerObserver implements Runnable {
         while(true){
             Update();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -25,28 +25,28 @@ public class ServerObserver implements Runnable {
     /**
      * 
      */
-    private Vector<MainServer> MainServer =new Vector<>();
+    private Vector<ServerListener> listeners =new Vector<>();
 
     /**
      * 
      */
-    public void subscribe(MainServer listener) {
-        MainServer.add(listener);
+    public void subscribe(ServerListener listener) {
+        listeners.add(listener);
     }
 
     /**
      * 
      */
-    public void unsubscribe(MainServer listener) {
-        MainServer.remove(listener);
+    public void unsubscribe(ServerListener listener) {
+        listeners.remove(listener);
     }
 
     /**
      * Update states with a 1 sec interval
      */
     public void Update() {
-        for (int i = 0; i < MainServer.size(); i++) {
-            MainServer.get(i).updateServer();
+        for (ServerListener listener:listeners) {
+            listener.updateServer();
         }
     }
 

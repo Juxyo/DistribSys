@@ -47,9 +47,7 @@ public class ConversationList implements ConversationsListener {
             return;
         }
         //test message type
-        if(data.length==2) {
-            cli.login(data);
-        }else{
+        if (data.length>2){
             String username="";
             String source_address=data[0];
             String conversation_name=data[1];
@@ -95,6 +93,9 @@ public class ConversationList implements ConversationsListener {
                     cli.getConvs().getConversations().get(0).sort(0);
                 }
             }
+        }else {
+            if(!cli.isLoggedIn()) cli.login(data);
+            else cli.refreshUserList(data);
         }
     }
 

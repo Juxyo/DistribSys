@@ -1,9 +1,6 @@
 package Server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class CSVFileReader {
@@ -15,13 +12,14 @@ public class CSVFileReader {
         String csvSplitBy = ";";
 
         try {
-            InputStream is= CSVFileReader.class.getResourceAsStream(filePath);
+            InputStream is= new FileInputStream(filePath);
             br = new BufferedReader(new InputStreamReader(is));
             while ((line = br.readLine()) != null) {
                 // Use comma as separator
                 String[] row = line.split(csvSplitBy);
                 data.add(row);
             }
+            is.close();
         } finally {
             if (br != null) {
                 br.close();

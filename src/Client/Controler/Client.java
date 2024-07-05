@@ -23,13 +23,13 @@ public class Client {
     private int port=UDPUtils.getAvailablePort();
 
 
-
-    private static String adressServer="127.0.0.1:6969";
-
     /**
      * 
      */
     private String address;
+
+    private static String addressServer;
+    private static String addressUpdateServer;
 
     /**
      * 
@@ -51,6 +51,8 @@ public class Client {
      */
     private ConversationList convs=new ConversationList(this);
 
+    private boolean loggedIn=false;
+
     /**
      *
      */
@@ -69,7 +71,7 @@ public class Client {
     /**
      * Default constructor
      */
-    public Client() {
+    public Client(String serverAddress) {
 
         try {
             address= InetAddress.getLocalHost().getHostAddress();
@@ -102,25 +104,25 @@ public class Client {
         }
         System.out.println("Client working on: "+address+":"+port);
         convs.addConversation(new Conversation("General"));
-
-        /*
-         *  login hardcodé
-         */
-        username="mattis";
-        String password="4321";
+        addressServer=serverAddress+":6969";
+        addressUpdateServer=serverAddress+":6970";
+        mainView=new MainView(this,false);
+    }
+    /**
+     *
+     */
+    public void sendLoginRequest(String username,String password){
+        mainView.getLoginView().setStatusLabel("Request sent!");
+        this.username=username;
         try {
-            UDPUtils.sendAuth(username,password,address+":"+port,adressServer);
+            UDPUtils.sendAuth(address+":"+port,username,password,addressServer);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //
-
-        mainView=new MainView(this);
-        addChanel("moi");
     }
 
     /**
-     * 
+     *
      */
     public void sendMessage(String msg,String conv,ArrayList<String> destinationHosts) {
         if(conv!=null){
@@ -176,20 +178,69 @@ public class Client {
     }
 
     /**
+     *
+     */
+    public void removeChanel(String hostName) {
+        Vector<Conversation> conversations=convs.getConversations();
+        for (Conversation conv:conversations) {
+            if(conv.getName().contains(username) && conv.getName().contains(hostName)){
+                convs.removeConversation(conv);
+                mainView.getMenuView().refreshChanelList(convs);
+                return;
+            }
+        }
+    }
+
+    /**
      * 
      */
     public void login(String[] data) {
         if (data[0].equals("True")){
+            loggedIn=true;
+            System.out.println("Logged in as "+username+"!");
             knownHostsaddr.clear();
             knownHosts.clear();
+            if(data[1].equals("none")){
+                mainView.setVisible(false);
+                mainView=new MainView(this,true);
+                return;
+            }
+            mainView.setVisible(false);
+            mainView=new MainView(this,true);
             for ( String host : data[1].split(",")){
                 String[] temp = host.split("-");
                 knownHosts.add(temp[0]);
                 knownHostsaddr.put(temp[0],temp[1]);
+                addChanel(temp[0]);
             }
             sendMessage(username+" connected!","General",knownHosts);
+        }else mainView.getLoginView().setStatusLabel("Connexion refused!");
+    }
+
+    public void refreshUserList(String[] data){
+        String[] users=data[1].split(",");
+        for (int i = 0; i < knownHosts.size(); i++) {
+            boolean is_user_still_connected=false;
+            for (String user:users) {
+                if(user.equals("none")) return;
+                String[] temp = user.split("-");
+                if(knownHosts.get(i).equals(temp[0])) {
+                    is_user_still_connected=true;
+                }
+            }
+            if (!is_user_still_connected) {
+                removeChanel(knownHosts.get(i));
+                knownHostsaddr.remove(knownHosts.get(i));
+                knownHosts.remove(knownHosts.get(i));
+            }
+        }
+        try {
+            UDPUtils.sendPingToServer(username,addressUpdateServer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
 
     public ConversationsObserver getConvObserver() {
         return convObserver;
@@ -216,6 +267,10 @@ public class Client {
 
     public ArrayList<String> getKnownHosts() {
         return knownHosts;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 
     public HashMap<String, String> getKnownHostsaddr() {

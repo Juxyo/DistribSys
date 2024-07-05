@@ -17,9 +17,11 @@ public class User {
     private String password;
     private String host;
 
+    private int lastResponse=0;
 
-    public int compareTo(User user) {
-        return user.userName.compareTo(this.userName);
+
+    public boolean compareTo(User user) {
+        return user.userName.equals(this.userName);
     }
 
     public String getUserName() {
@@ -33,4 +35,12 @@ public class User {
     public String getHost() {
         return host;
     }
+
+    public void incrementLastResponse() {
+        lastResponse++;
+    }
+
+    public int getLastResponse() {return lastResponse;}
+
+    public void resetLastResponse(){lastResponse=0;}
 }

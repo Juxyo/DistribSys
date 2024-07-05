@@ -23,6 +23,16 @@ public class UDPUtils {
         socket.close();
     }
 
+    public static void sendPingToServer(String message,String host) throws Exception {
+        DatagramSocket socket = new DatagramSocket();
+        byte[] buffer = message.getBytes();
+        String[] h=host.split(":");
+
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, getInetAddressFromString(h[0]),Integer.parseInt(h[1]));
+        socket.send(packet);
+        socket.close();
+    }
+
     public static void sendAuth(String localHost,String userName,String password, String host) throws Exception {
         DatagramSocket socket = new DatagramSocket();
         String message=localHost+";"+userName+";"+password;
