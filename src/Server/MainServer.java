@@ -18,7 +18,16 @@ public class MainServer implements ServerListener,UserListener{
     private Refresher rf=new Refresher(this);
 
     public static void main(String[] args) {
-        MainServer mainServer = new MainServer(args[0]);
+        if(args.length==1) {
+            try {
+                if (args[0].split(".")[1].equals("csv")) {
+                    MainServer mainServer = new MainServer(args[0]);
+                }else System.out.println("Error: please use a .csv file");
+            } catch (Error e) {
+                System.out.println("file name error");
+            }
+        }
+        else System.out.println("Error: Usage java -jar Server.jar <csvFilePath>");
     }
 
     public MainServer(String usersFile) {
