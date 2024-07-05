@@ -179,12 +179,16 @@ public class Client {
      * 
      */
     public void login(String[] data) {
-        knownHostsaddr.clear();
-        knownHosts.clear();
-        for ( String host : data[1].split(",")){
-            host.split(":");
+        if (data[0].equals("True")){
+            knownHostsaddr.clear();
+            knownHosts.clear();
+            for ( String host : data[1].split(",")){
+                String[] temp = host.split("-");
+                knownHosts.add(temp[0]);
+                knownHostsaddr.put(temp[0],temp[1]);
+            }
+            sendMessage(username+" connected!","General",knownHosts);
         }
-        sendMessage(username+" connected!","General",knownHosts);
     }
 
     public ConversationsObserver getConvObserver() {

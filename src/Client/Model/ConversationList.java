@@ -57,8 +57,7 @@ public class ConversationList implements ConversationsListener {
             String clock=data[3];
             System.out.println("Received at "+clock+" -->\nSource : "+source_address+"\n"+"Conversation : "+conversation_name+"\n"+"Message :\n"+msg);
             if(!cli.getKnownHostsaddr().containsValue(source_address)){
-                //TODO mettre le nom du nouvel utilisateur au lieu de "userX"
-                username="user"+(cli.getKnownHosts().size()+1);
+                username=msg.split(" ")[0];
                 cli.getKnownHosts().add(username);
                 cli.getKnownHostsaddr().put(username,source_address);
                 cli.addChanel(username);

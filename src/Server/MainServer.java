@@ -72,7 +72,7 @@ public class MainServer implements ServerListener{
         if (authenticate(login,password, source_address)) {
             System.out.println("Login successful");
             try {
-                Server.UDPUtils.returnAuth(true,getDecomposedUserList(),source_address);
+                Server.UDPUtils.returnAuth("True",getDecomposedUserList(),source_address);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

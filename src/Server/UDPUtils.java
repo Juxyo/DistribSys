@@ -22,7 +22,7 @@ public class UDPUtils {
         socket.send(packet);
         socket.close();
     }
-    public static void returnAuth(boolean loginResult, String userList, String host) throws Exception {
+    public static void returnAuth(String loginResult, String userList, String host) throws Exception {
         DatagramSocket socket = new DatagramSocket();
         String message=loginResult+";"+ userList;
         byte[] buffer = message.getBytes();
