@@ -77,18 +77,6 @@ public class Client {
             throw new RuntimeException(e);
         }
 
-        /*
-        *  login hardcodé
-         */
-        String username="mattis";
-        String password="4321";
-        try {
-            UDPUtils.sendAuth(username,password,address+":"+port,adressServer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        //
-
         convObserver=new ConversationsObserver();
         Thread t1=new Thread(convObserver);
         t1.start();
@@ -115,13 +103,17 @@ public class Client {
         System.out.println("Client working on: "+address+":"+port);
         convs.addConversation(new Conversation("General"));
 
-        //TODO enlever ce qu'il y a dans le bloc ci-dessous et implémenter le login
-        knownHosts.add("moi");
-        System.out.println("enter the port to send messages");
-        Scanner in = new Scanner(System.in); // using java.util.Scanner;
-        knownHostsaddr.put("moi",address+":"+in.nextLine());
+        /*
+         *  login hardcodé
+         */
+        username="mattis";
+        String password="4321";
+        try {
+            UDPUtils.sendAuth(username,password,address+":"+port,adressServer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //
-        login(data);
 
         mainView=new MainView(this);
         addChanel("moi");
@@ -192,6 +184,7 @@ public class Client {
         for ( String host : data[1].split(",")){
             host.split(":");
         }
+        sendMessage(username+" connected!","General",knownHosts);
     }
 
     public ConversationsObserver getConvObserver() {
