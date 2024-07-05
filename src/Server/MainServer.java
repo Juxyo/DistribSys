@@ -136,7 +136,7 @@ public class MainServer implements ServerListener,UserListener{
             return;
         }
         for (User listUser:userList) {
-            System.out.println("refreshing user: "+listUser.getUserName());
+            //System.out.println("refreshing user: "+listUser.getUserName());
             if(listUser.getUserName().equals(data)){
                 listUser.resetLastResponse();
             }

@@ -13,7 +13,7 @@ public class UserObserver implements Runnable {
         while(true){
             Update();
             try {
-                Thread.sleep(10000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

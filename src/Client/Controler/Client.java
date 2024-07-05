@@ -112,7 +112,7 @@ public class Client {
      *
      */
     public void sendLoginRequest(String username,String password){
-        mainView.getLoginView().setStatusLabel("Request sent!");
+        mainView.getLoginView().setStatusLabel("Request sent to "+addressServer);
         this.username=username;
         try {
             UDPUtils.sendAuth(address+":"+port,username,password,addressServer);
