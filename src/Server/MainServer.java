@@ -5,11 +5,12 @@ import Client.Controler.UDPUtils;
 import java.io.IOException;
 import java.util.*;
 
-public class Server implements ServerListener{
+public class MainServer implements ServerListener{
 
-    public static void main(String[] args) {Server server = new Server();}
+    public static void main(String[] args) {
+        MainServer mainServer = new MainServer();}
 
-    public Server() {
+    public MainServer() {
         userList=new ArrayList<User>();
         getUsers();
     }
@@ -51,7 +52,7 @@ public class Server implements ServerListener{
     public String getDecomposedUserList() {
         String tempList="";
         for(User u : userList){
-            tempList.concat(u.getUserName()+";"+u.getPassword()+"\n");
+            tempList.concat(u.getUserName()+"-"+u.getHost()+",");
         }
         return tempList;
     }
@@ -65,13 +66,16 @@ public class Server implements ServerListener{
             return;
         }
         String source_address=data[0];
-        String clock=data[1];
-        String login=data[2];
-        String password=data[3];
-        System.out.println("Login received at "+ clock +" -->\nSource : "+source_address+"\n"+"login :\n"+login);
+        String login=data[1];
+        String password=data[2];
+        System.out.println("Auth received :\nSource : "+source_address+"\n"+"login : "+login+" - *******");
         if (authenticate(login,password, source_address)) {
             System.out.println("Login successful");
-            // TODO retourner le message de login avec boolean et list des user connecté
+            try {
+                Server.UDPUtils.returnAuth(true,getDecomposedUserList(),source_address);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

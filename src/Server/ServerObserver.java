@@ -25,28 +25,28 @@ public class ServerObserver implements Runnable {
     /**
      * 
      */
-    private Vector<Server> Server=new Vector<>();
+    private Vector<MainServer> MainServer =new Vector<>();
 
     /**
      * 
      */
-    public void subscribe(Server listener) {
-        Server.add(listener);
+    public void subscribe(MainServer listener) {
+        MainServer.add(listener);
     }
 
     /**
      * 
      */
-    public void unsubscribe(Server listener) {
-        Server.remove(listener);
+    public void unsubscribe(MainServer listener) {
+        MainServer.remove(listener);
     }
 
     /**
      * Update states with a 1 sec interval
      */
     public void Update() {
-        for (int i = 0; i < Server.size(); i++) {
-            Server.get(i).updateServer();
+        for (int i = 0; i < MainServer.size(); i++) {
+            MainServer.get(i).updateServer();
         }
     }
 

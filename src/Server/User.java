@@ -29,4 +29,8 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public String getHost() {
+        return host;
+    }
 }

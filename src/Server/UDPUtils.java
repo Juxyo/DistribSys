@@ -2,6 +2,7 @@ package Server;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 
 /**
  * 
@@ -21,9 +22,9 @@ public class UDPUtils {
         socket.send(packet);
         socket.close();
     }
-    public static void sendAuth(String localHost,String login,String password, String host) throws Exception {
+    public static void returnAuth(boolean loginResult, String userList, String host) throws Exception {
         DatagramSocket socket = new DatagramSocket();
-        String message=localHost+";"+login+";"+password;
+        String message=loginResult+";"+ userList;
         byte[] buffer = message.getBytes();
         String[] h=host.split(":");
 

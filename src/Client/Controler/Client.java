@@ -4,17 +4,13 @@ import Client.Model.Conversation;
 import Client.Model.ConversationList;
 import Client.Model.VectorClock;
 import Client.Vue.MainView;
-import Client.Vue.MenuView;
 
-import java.net.BindException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
-
-import static java.net.InetAddress.getLocalHost;
 
 /**
  * 
@@ -27,6 +23,8 @@ public class Client {
     private int port=UDPUtils.getAvailablePort();
 
 
+
+    private static String adressServer="127.0.0.1:6969";
 
     /**
      * 
@@ -79,6 +77,18 @@ public class Client {
             throw new RuntimeException(e);
         }
 
+        /*
+        *  login hardcodé
+         */
+        String username="mattis";
+        String password="4321";
+        try {
+            UDPUtils.sendAuth(username,password,address+":"+port,adressServer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //
+
         convObserver=new ConversationsObserver();
         Thread t1=new Thread(convObserver);
         t1.start();
@@ -111,7 +121,7 @@ public class Client {
         Scanner in = new Scanner(System.in); // using java.util.Scanner;
         knownHostsaddr.put("moi",address+":"+in.nextLine());
         //
-        login();
+        login(data);
 
         mainView=new MainView(this);
         addChanel("moi");
@@ -176,8 +186,12 @@ public class Client {
     /**
      * 
      */
-    public void login() {
-        // TODO implement here
+    public void login(String[] data) {
+        knownHostsaddr.clear();
+        knownHosts.clear();
+        for ( String host : data[1].split(",")){
+            host.split(":");
+        }
     }
 
     public ConversationsObserver getConvObserver() {
