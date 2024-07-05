@@ -7,10 +7,7 @@ import Client.Vue.MainView;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * 
@@ -235,6 +232,8 @@ public class Client {
             }
         }
         try {
+            UDPUtils.sendPingToServer(username,addressUpdateServer);
+            Thread.sleep(100);
             UDPUtils.sendPingToServer(username,addressUpdateServer);
         } catch (Exception e) {
             throw new RuntimeException(e);

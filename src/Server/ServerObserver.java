@@ -14,11 +14,6 @@ public class ServerObserver implements Runnable {
     public void run() {
         while(true){
             Update();
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -41,9 +36,6 @@ public class ServerObserver implements Runnable {
         listeners.remove(listener);
     }
 
-    /**
-     * Update states with a 1 sec interval
-     */
     public void Update() {
         for (ServerListener listener:listeners) {
             listener.updateServer();

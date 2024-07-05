@@ -12,11 +12,6 @@ public class UserObserver implements Runnable {
     public void run() {
         while(true){
             Update();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
