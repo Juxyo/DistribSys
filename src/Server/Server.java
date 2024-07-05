@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Server {
 
+    public static void main(String[] args) {Server server = new Server();}
 
     public Server() {
         userList=new ArrayList<User>();
@@ -14,9 +15,6 @@ public class Server {
     public String addUser(User user) {
         if(!userList.contains(user)){
             userList.add(user);
-            /*
-            * TODO : Broadcast new user to userList
-             */
         }
         else{
             return("User Already Exists");
@@ -42,4 +40,7 @@ public class Server {
         return tempList;
     }
 
+    public void update() {
+        // TODO
+    }
 }
