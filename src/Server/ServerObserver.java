@@ -1,7 +1,5 @@
 package Server;
 
-import Client.Controler.ConversationsListener;
-
 import java.util.Vector;
 
 /**
@@ -48,7 +46,7 @@ public class ServerObserver implements Runnable {
      */
     public void Update() {
         for (int i = 0; i < Server.size(); i++) {
-            Server.get(i).update();
+            Server.get(i).updateServer();
         }
     }
 

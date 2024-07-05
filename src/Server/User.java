@@ -5,23 +5,21 @@ package Server;
  */
 public class User {
 
-    public User(String userName,String  password, int port) {
-        this.password=password;
-        this.userName=userName;
-        this.port=port;
+    public User(String parUserName,String  parPassword, String parHost) {
+        this.password=parPassword;
+        this.userName=parUserName;
+        if (parHost != ""){
+            host=parHost;
+        }
     }
 
     private String userName;
     private String password;
-    private int port;
+    private String host;
 
 
     public int compareTo(User user) {
         return user.userName.compareTo(this.userName);
-    }
-
-    public void setPort(int port) {
-        this.port = port;
     }
 
     public String getUserName() {
@@ -30,9 +28,5 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public int getPort() {
-        return port;
     }
 }

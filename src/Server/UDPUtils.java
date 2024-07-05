@@ -21,6 +21,16 @@ public class UDPUtils {
         socket.send(packet);
         socket.close();
     }
+    public static void sendAuth(String localHost,String login,String password, String host) throws Exception {
+        DatagramSocket socket = new DatagramSocket();
+        String message=localHost+";"+login+";"+password;
+        byte[] buffer = message.getBytes();
+        String[] h=host.split(":");
+
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, getInetAddressFromString(h[0]),Integer.parseInt(h[1]));
+        socket.send(packet);
+        socket.close();
+    }
     /**
      * Static method to receive data
      */
