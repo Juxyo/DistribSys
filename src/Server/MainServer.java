@@ -24,6 +24,7 @@ public class MainServer implements ServerListener,UserListener{
             }else System.out.println("Error: please use a .csv file");
         }
         else System.out.println("Error: Usage java -jar Server.jar <csvFilePath>");
+        while(true);
     }
 
     public MainServer(String usersFile) {
